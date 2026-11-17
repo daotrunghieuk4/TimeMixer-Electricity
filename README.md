@@ -20,18 +20,7 @@ git lfs pull
 python -m pip install -r requirements.txt
 ```
 
-## 1. Tên nhóm và thành viên
-
-Tên repository: `TimeMixer-Electricity`
-
-Tên nhóm: Nhóm 03
-
-Thành viên:
-- Đào Trung Hiếu
-- Nguyễn Văn Hiệp
-- Nguyễn Minh Huy
-
-## 2. Chủ đề nghiên cứu
+## 1. Chủ đề nghiên cứu
 
 Đề tài của nhóm là dự báo chuỗi thời gian dài hạn trên bộ dữ liệu **Electricity** bằng mô hình **TimeMixer**.
 
@@ -48,7 +37,7 @@ Trong đó:
 - `C`: số biến/kênh trong chuỗi thời gian.
 - Với thực nghiệm chính: `L = 96`, `C = 321`, `H ∈ {96, 192, 336, 720}`.
 
-## 3. Mô tả bộ dữ liệu
+## 2. Mô tả bộ dữ liệu
 
 Nhóm sử dụng bộ dữ liệu **Electricity**, gồm mức tiêu thụ điện của 321 khách hàng/đơn vị, được ghi nhận theo tần suất 1 giờ.
 
@@ -73,7 +62,7 @@ Dữ liệu đã được chia theo thứ tự thời gian thành ba tập train
 | Validation | 2632 | 2018-08-07 06:00:00 | 2018-11-24 21:00:00 |
 | Test | 5260 | 2018-11-24 22:00:00 | 2019-07-02 01:00:00 |
 
-## 4. Tài liệu nghiên cứu
+## 3. Tài liệu nghiên cứu
 
 Các bản tóm tắt nghiên cứu liên quan được tổ chức trong thư mục `papers/`:
 
@@ -86,11 +75,11 @@ papers/
 
 Ba paper này được dùng làm nền tham khảo về dự báo chuỗi thời gian đa biến, biến ngoại sinh, mô hình đa tỷ lệ và quan hệ giữa các biến.
 
-## 5. Phương pháp thực hiện
+## 4. Phương pháp thực hiện
 
 Quy trình thực hiện gồm bốn bước chính.
 
-### 5.1. Khám phá dữ liệu
+### 4.1. Khám phá dữ liệu
 
 Notebook:
 
@@ -105,7 +94,7 @@ Nội dung:
 - Kiểm tra cột thời gian.
 - Vẽ mẫu hình tiêu thụ điện theo thời gian.
 
-### 5.2. Tiền xử lý và tạo đặc trưng
+### 4.2. Tiền xử lý và tạo đặc trưng
 
 Notebook:
 
@@ -122,7 +111,7 @@ Các bước chính:
 6. Chia train/validation/test theo đúng thứ tự thời gian.
 7. Tạo mẫu học bằng cửa sổ trượt với `seq_len = 96`.
 
-### 5.3. Xây dựng mô hình
+### 4.3. Xây dựng mô hình
 
 Notebook:
 
@@ -164,7 +153,7 @@ src/
 └── evaluation.py
 ```
 
-### 5.4. Đánh giá mô hình
+### 4.4. Đánh giá mô hình
 
 Notebook:
 
@@ -194,7 +183,7 @@ figures/
 
 Thư mục `figures/` lưu các hình dự báo và biểu đồ so sánh metric. Ba hình dưới đây trình bày kết quả của từng mô hình.
 
-## 6. Bảng kết quả mô hình
+## 5. Bảng kết quả mô hình
 
 | Model | Lookback | Horizon | MSE | MAE | RMSE |
 |---|---:|---:|---:|---:|---:|
@@ -213,23 +202,23 @@ Thư mục `figures/` lưu các hình dự báo và biểu đồ so sánh metric
 
 Theo kết quả thực nghiệm, TimeMixer đạt sai số thấp nhất trên cả bốn tầm dự báo.
 
-## 7. Hình kết quả
+## 6. Hình kết quả
 
 Ba hình dưới đây là bản trực quan chuẩn được đưa vào báo cáo sau khi chạy thí nghiệm.
 
-### 7.1. TimeMixer
+### 6.1. TimeMixer
 
 ![TimeMixer full test](figures/timemixer_full_test_lookback96.png)
 
-### 7.2. Seasonal Naive
+### 6.2. Seasonal Naive
 
 ![Seasonal Naive full test](figures/seasonal_naive_full_test_lookback96.png)
 
-### 7.3. XGBoost
+### 6.3. XGBoost
 
 ![XGBoost full test](figures/xgboost_full_test_lookback96.png)
 
-## 8. Cấu trúc repository
+## 7. Cấu trúc repository
 
 ```text
 TimeMixer-Electricity/
@@ -263,15 +252,15 @@ TimeMixer-Electricity/
 └── .gitignore
 ```
 
-## 9. Cách chạy code
+## 8. Cách chạy code
 
-### 9.1. Cài đặt thư viện
+### 8.1. Cài đặt thư viện
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 9.2. Chuẩn bị dữ liệu
+### 8.2. Chuẩn bị dữ liệu
 
 Đặt file dữ liệu vào:
 
@@ -281,7 +270,7 @@ data/raw/electricity.csv
 
 Dữ liệu được quản lý bằng Git LFS. Sau khi clone, chạy `git lfs install` và `git lfs pull` từ thư mục gốc repo để tải nội dung các tệp dữ liệu.
 
-### 9.3. Chạy notebook theo thứ tự
+### 8.3. Chạy notebook theo thứ tự
 
 ```text
 notebooks/01_data_exploration.ipynb
@@ -290,7 +279,7 @@ notebooks/03_models.ipynb
 notebooks/04_evaluation.ipynb
 ```
 
-### 9.4. Chạy TimeMixer từ code gốc
+### 8.4. Chạy TimeMixer từ code gốc
 
 Trong Python:
 
@@ -301,13 +290,13 @@ run_timemixer(pred_len=96)
 
 Hoặc chạy trực tiếp code gốc trong `src/timemixer_core` và trỏ dữ liệu về `data/raw/electricity.csv`.
 
-## 10. Diễn giải kết quả
+## 9. Diễn giải kết quả
 
 Trong bảng thực nghiệm của repository, TimeMixer đạt MSE thấp nhất ở cả bốn horizon. Khi horizon tăng từ 96 lên 720, MSE của TimeMixer tăng từ 0.1526 lên 0.2236, cho thấy mức sai số thay đổi theo độ dài khoảng dự báo trong thiết lập này.
 
 Seasonal Naive đóng vai trò mốc tham chiếu dựa trên chu kỳ, còn XGBoost đại diện cho phương pháp học máy sử dụng đặc trưng. Việc đặt các mô hình cạnh nhau giúp quan sát tác dụng của từng cách biểu diễn dữ liệu trong cùng bài toán. Kết quả được diễn giải theo dữ liệu, cách tiền xử lý và cấu hình đã lưu; so sánh với một thí nghiệm khác cần thống nhất các yếu tố này.
 
-## 11. Cấu hình chạy TimeMixer
+## 10. Cấu hình chạy TimeMixer
 
 Hàm `build_timemixer_command` trong `src/models.py` tập trung cấu hình để chạy phần triển khai TimeMixer. Một số giá trị đang sử dụng:
 
@@ -335,7 +324,7 @@ for horizon in (96, 192, 336, 720):
 
 Mỗi lần gọi khởi chạy một tiến trình huấn luyện. Thời gian và tài nguyên cần thiết phụ thuộc thiết bị và horizon. Để đối chiếu các lần chạy, ghi lại phiên bản thư viện, cấu hình, thiết bị và kết quả tương ứng.
 
-## 12. Hướng dẫn đọc kết quả và dữ liệu
+## 11. Hướng dẫn đọc kết quả và dữ liệu
 
 - Dùng [metrics.csv](results/metrics.csv) để xử lý tiếp bảng chỉ số bằng Python hoặc công cụ bảng tính.
 - Xem [báo cáo tổng hợp](report/final_report.md) để đọc quy trình cùng phần phân tích của nhóm.
