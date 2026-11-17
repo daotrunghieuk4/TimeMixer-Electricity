@@ -1,8 +1,28 @@
-# Time Series Group 03
+# TimeMixer Electricity
+
+Dự báo điện năng đa biến trên Electricity với TimeMixer, Seasonal Naive và XGBoost. Cửa sổ đầu vào gồm 96 bước, 321 biến và bốn tầm dự báo.
+
+| Mô hình | MSE @96 | MSE @192 | MSE @336 | MSE @720 |
+|---|---:|---:|---:|---:|
+| TimeMixer | 0.1526 | 0.1656 | 0.1854 | 0.2236 |
+| Seasonal Naive | 0.3195 | 0.3028 | 0.3261 | 0.3661 |
+| XGBoost | 0.7905 | 0.9910 | 1.1582 | 1.1618 |
+
+Kết quả thí nghiệm đã lưu được tổng hợp từ [metrics.csv](results/metrics.csv).
+
+![So sánh MSE của ba mô hình](figures/model_mse_comparison.png)
+
+```bash
+git clone https://github.com/daotrunghieuk4/TimeMixer-Electricity.git
+cd TimeMixer-Electricity
+git lfs install
+git lfs pull
+python -m pip install -r requirements.txt
+```
 
 ## 1. Tên nhóm và thành viên
 
-Tên repository: `time-series-group-03`
+Tên repository: `TimeMixer-Electricity`
 
 Tên nhóm: Nhóm 03
 
@@ -172,7 +192,7 @@ figures/
 └── xgboost_full_test_lookback96.png
 ```
 
-Thư mục `figures/` chỉ giữ ba hình được dùng trực tiếp trong báo cáo để tránh làm rối repository. Các hình metric phụ, alias và bản PDF đã được bỏ khỏi bản nộp.
+Thư mục `figures/` lưu các hình dự báo và biểu đồ so sánh metric. Ba hình dưới đây trình bày kết quả của từng mô hình.
 
 ## 6. Bảng kết quả mô hình
 
@@ -209,10 +229,10 @@ Ba hình dưới đây là bản trực quan chuẩn được đưa vào báo c�
 
 ![XGBoost full test](figures/xgboost_full_test_lookback96.png)
 
-## 8. Cấu trúc repository bắt buộc
+## 8. Cấu trúc repository
 
 ```text
-time-series-group-03/
+TimeMixer-Electricity/
 ├── README.md
 ├── papers/
 │   ├── paper_01.md
@@ -259,7 +279,7 @@ pip install -r requirements.txt
 data/raw/electricity.csv
 ```
 
-Bản ZIP đầy đủ đã có sẵn file này. Nếu dùng bản nhẹ không kèm data, cần copy file `electricity.csv` vào đúng vị trí trên.
+Dữ liệu được quản lý bằng Git LFS. Sau khi clone, chạy `git lfs install` và `git lfs pull` từ thư mục gốc repo để tải nội dung các tệp dữ liệu.
 
 ### 9.3. Chạy notebook theo thứ tự
 
