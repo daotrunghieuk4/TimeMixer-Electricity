@@ -73,9 +73,9 @@ Dữ liệu đã được chia theo thứ tự thời gian thành ba tập train
 | Validation | 2632 | 2018-08-07 06:00:00 | 2018-11-24 21:00:00 |
 | Test | 5260 | 2018-11-24 22:00:00 | 2019-07-02 01:00:00 |
 
-## 4. Ba bài báo đã đọc
+## 4. Tài liệu nghiên cứu
 
-Nhóm giữ nguyên ba bài tóm tắt paper từ bản GitHub cũ:
+Các bản tóm tắt nghiên cứu liên quan được tổ chức trong thư mục `papers/`:
 
 ```text
 papers/
@@ -148,13 +148,13 @@ Nhóm so sánh ba mô hình:
 - Past-Decomposable-Mixing.
 - Future-Multipredictor-Mixing.
 
-Code TimeMixer gốc từ bản ZIP được giữ trong:
+Phần triển khai TimeMixer được tổ chức trong:
 
 ```text
 src/timemixer_core/
 ```
 
-Bốn file chính theo cấu trúc bắt buộc được đặt tại:
+Các module phụ trách dữ liệu, đặc trưng, mô hình và đánh giá được đặt tại:
 
 ```text
 src/
@@ -301,6 +301,45 @@ run_timemixer(pred_len=96)
 
 Hoặc chạy trực tiếp code gốc trong `src/timemixer_core` và trỏ dữ liệu về `data/raw/electricity.csv`.
 
-## 10. Kết luận
+## 10. Diễn giải kết quả
 
-Nhóm đã thay thế bản GRU/weather cũ bằng bài toán dự báo phụ tải điện sử dụng TimeMixer. Kết quả cho thấy TimeMixer vượt Seasonal Naive và XGBoost trên cả bốn horizon, đặc biệt nhờ khả năng học biểu diễn đa quy mô và phân tách thông tin mùa vụ--xu hướng.
+Trong bảng thực nghiệm của repository, TimeMixer đạt MSE thấp nhất ở cả bốn horizon. Khi horizon tăng từ 96 lên 720, MSE của TimeMixer tăng từ 0.1526 lên 0.2236, cho thấy mức sai số thay đổi theo độ dài khoảng dự báo trong thiết lập này.
+
+Seasonal Naive đóng vai trò mốc tham chiếu dựa trên chu kỳ, còn XGBoost đại diện cho phương pháp học máy sử dụng đặc trưng. Việc đặt các mô hình cạnh nhau giúp quan sát tác dụng của từng cách biểu diễn dữ liệu trong cùng bài toán. Kết quả được diễn giải theo dữ liệu, cách tiền xử lý và cấu hình đã lưu; so sánh với một thí nghiệm khác cần thống nhất các yếu tố này.
+
+## 11. Cấu hình chạy TimeMixer
+
+Hàm `build_timemixer_command` trong `src/models.py` tập trung cấu hình để chạy phần triển khai TimeMixer. Một số giá trị đang sử dụng:
+
+| Tham số | Giá trị |
+|---|---:|
+| `seq_len` | 96 |
+| `enc_in`, `dec_in`, `c_out` | 321 |
+| `d_model` | 16 |
+| `d_ff` | 32 |
+| `batch_size` | 32 |
+| `learning_rate` | 0.01 |
+| `train_epochs` | 20 |
+| `patience` | 10 |
+| `down_sampling_layers` | 3 |
+| `down_sampling_window` | 2 |
+
+Từ thư mục gốc repository, có thể chạy lần lượt bốn horizon:
+
+```python
+from src.models import run_timemixer
+
+for horizon in (96, 192, 336, 720):
+    run_timemixer(pred_len=horizon, seq_len=96)
+```
+
+Mỗi lần gọi khởi chạy một tiến trình huấn luyện. Thời gian và tài nguyên cần thiết phụ thuộc thiết bị và horizon. Để đối chiếu các lần chạy, ghi lại phiên bản thư viện, cấu hình, thiết bị và kết quả tương ứng.
+
+## 12. Hướng dẫn đọc kết quả và dữ liệu
+
+- Dùng [metrics.csv](results/metrics.csv) để xử lý tiếp bảng chỉ số bằng Python hoặc công cụ bảng tính.
+- Xem [báo cáo tổng hợp](report/final_report.md) để đọc quy trình cùng phần phân tích của nhóm.
+- Dùng các biểu đồ trong `figures/` để quan sát dự báo bên cạnh chuỗi tham chiếu.
+- Khi clone bằng công cụ không hỗ trợ Git LFS, chạy `git lfs pull` trước khi mở notebook. File CSV phải chứa dữ liệu dạng bảng, thay vì nội dung con trỏ bắt đầu bằng `version https://git-lfs.github.com/spec/v1`.
+
+Khi bổ sung mô hình, duy trì cách chia theo thời gian và bốn horizon để bảng kết quả dễ đối chiếu. Các thống kê học từ dữ liệu cần được fit trên tập train và áp dụng nhất quán cho validation/test.
